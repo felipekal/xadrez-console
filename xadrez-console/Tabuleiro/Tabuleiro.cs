@@ -23,5 +23,43 @@ namespace tabuleiro
         {
             return pecas[linha, coluna];
         }
+
+        public Peca peca(Posicao posicao)
+        {
+            return pecas[posicao.Linha, posicao.Coluna];
+        }
+
+        public bool ExistePeca(Posicao pos)
+        {
+            validarPosicao(pos);
+            return peca(pos) != null;
+        }
+
+        public void colocarPeca(Peca p, Posicao pos)
+        {
+            if (ExistePeca(pos))
+            {
+                throw new TabuleiroException("Ja existe uma peca nessa posicao!");
+            }
+            pecas[pos.Linha, pos.Coluna] = p;
+            p.Posicao = pos;
+        }
+
+        public bool PosicaoValida(Posicao posicao)
+        {
+            if (posicao.Linha < 0 || posicao.Linha >= Linhas || posicao.Coluna < 0 || posicao.Coluna >= Colunas)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void validarPosicao(Posicao pos)
+        {
+            if (!PosicaoValida(pos))
+            {
+                throw new TabuleiroException("Posicao Invalida!");
+            }
+        }
     }
 }
